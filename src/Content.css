@@ -1,0 +1,67 @@
+.Content {
+  text-align: center;
+}
+
+.Content-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+h1{
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Content-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.Content-header {
+  background-color: #282c34;
+  padding-top: 70px;
+  padding-left: 10%;
+  padding-right: 10%;
+  height: calc(100vh - 120px);
+  width: 80%;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
+}
+
+.Content-link {
+  color: #61dafb;
+}
+
+@keyframes Content-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Button {
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-radius: 4px;
+  color: #ffffff;
+  background-image: linear-gradient(45deg, #FFC107 0%, #ff8b5f 100%);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #c58668;
+}
+
+.Button:hover {
+  opacity: 0.7;
+}
+
+.Button:active {
+  -webkit-transform: translateY(4px);
+  transform: translateY(4px);
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  border-bottom: none;
+}

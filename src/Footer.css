@@ -1,0 +1,17 @@
+.footer{
+  width: 100%;
+  min-width: 120px;
+  background-color: black;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  text-align: center;
+}
+
+img{
+  vertical-align: middle;
+  padding-top: 5px;
+  text-align: center;
+  height: 40px;
+}
