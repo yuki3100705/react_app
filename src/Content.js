@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Content.css';
-
-const url_users = 'http://localhost:3001/users';
+import ProfileBox from './ProfileBox';
 
 class Content extends Component {
   constructor() {
     super();
     this.state = {
+      url_users: 'http://localhost:3001/users',
       data: [],
       regname: '',
-      regaddress: ''
+      regaddress: '',
     };
   }
   componentDidMount() {
@@ -18,10 +18,11 @@ class Content extends Component {
   }
   getUser() {
     axios
-      .get(url_users)
+      .get(this.state.url_users)
       .then((results) => {
+        console.log(results.data);
         this.setState({
-          data: results.data
+          data: results.data,
         });
       },)
       .catch((error) => {
@@ -44,7 +45,7 @@ class Content extends Component {
   }
   registerUser(regname, regaddress) {
     const user = { name : regname, address : regaddress };
-    axios.post(url_users, user).then(this.getUser.bind(this));
+    axios.post(this.state.url_users, user).then(this.getUser.bind(this));
     this.setState({regname: '', regaddress: ''});
   }
   changeRegName(e) {
@@ -52,15 +53,6 @@ class Content extends Component {
   }
   changeRegAddress(e) {
     this.setState({regaddress: e.target.value});
-  }
-  deleteUser(id) {
-    axios.delete(url_users + '/' + id).then(this.getUser.bind(this));
-  }
-  updateUser(id, name, address) {
-    name = 'Edit';
-    address = 'edit@gmail.com';
-    const user = { name, address };
-    axios.put(url_users + '/' + id, user).then(this.getUser.bind(this));
   }
 
   render() {
@@ -71,35 +63,15 @@ class Content extends Component {
         <div>連絡先：<input value={this.state.regaddress} onChange={this.changeRegAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
         <div>
           <button
-          type="button"
-          className="Button"
-          onClick={() => this.registerUser(this.state.regname, this.state.regaddress)}
+            type="button"
+            className="Button"
+            onClick={() => this.registerUser(this.state.regname, this.state.regaddress)}
           >
             登録
           </button>
         </div>
-        {this.state.data.map((v)=>{
-          return (
-            <div className="user-list">
-              <hr/>
-              <p className="list-name"> 名前: {v.name} </p>
-              <p className="list-address"> 連絡先: {v.address} </p>
-              <button
-                type="button"
-                className="Button"
-                onClick={() => this.updateUser(v.id, v.name, v.address)}
-              >
-                編集
-              </button>
-              <button
-                type="button"
-                className="Button"
-                onClick={() => this.deleteUser(v.id)}
-              >
-                削除
-              </button>
-            </div>
-          );
+        {this.state.data.map((value) => {
+          return <ProfileBox data={value} url_users={this.state.url_users} getUser={this.getUser.bind(this)} />;
         })}
       </div>
     );
