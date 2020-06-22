@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Footer.css';
-import Icon from './symitems.png'
+import Icon from './symitems.png';
 
 class Footer extends Component {
 

@@ -57,22 +57,26 @@ class Content extends Component {
 
   render() {
     return (
-      <div className="Content-header">
-        <h1 className="Content-title">We Are Symitems!</h1>
+      <div className="MyContent">
+        <h1 className="MyContent-title">We Are Symitems!</h1>
         <div>名前：<input value={this.state.regname} onChange={this.changeRegName.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
         <div>連絡先：<input value={this.state.regaddress} onChange={this.changeRegAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
-        <div>
+        <div className="AddButton">
           <button
             type="button"
-            className="Button"
+            className="MyButton"
             onClick={() => this.registerUser(this.state.regname, this.state.regaddress)}
           >
             登録
           </button>
         </div>
-        {this.state.data.map((value) => {
-          return <ProfileBox data={value} url_users={this.state.url_users} getUser={this.getUser.bind(this)} />;
-        })}
+        <div className="grid">
+          <div className="row">
+            {this.state.data.map((value) => {
+              return <ProfileBox data={value} url_users={this.state.url_users} getUser={this.getUser.bind(this)} />;
+            })}
+          </div>
+        </div>
       </div>
     );
   }
