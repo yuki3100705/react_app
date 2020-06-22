@@ -19,7 +19,7 @@ class ProfileBox extends Component {
 
   render() {
     return (
-      <div className="col-xs-12 col-md-4">
+      <div className="col-xs-12 col-sm-6 col-lg-4 col-xl-3">
         <div className="list-user">
           <h3 className="list-name"> 名前: {this.props.data.name} </h3>
           <p> 連絡先: {this.props.data.address} </p>
