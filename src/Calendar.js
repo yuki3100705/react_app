@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Content.css';
+import './Calendar.css';
 import ProfileBox from './ProfileBox';
+import { Link } from "react-router-dom";
 
-class Content extends Component {
+class Calender extends Component {
   constructor() {
     super();
     this.state = {
@@ -58,7 +59,8 @@ class Content extends Component {
   render() {
     return (
       <div className="MyContent">
-        <h1 className="MyContent-title">We Are Symitems!</h1>
+        <h1 className="MyContent-title">実はカレンダー画面です。</h1>
+        <Link to="/administrator">Administrator</Link>
         <div>名前：<input value={this.state.regname} onChange={this.changeRegName.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
         <div>連絡先：<input value={this.state.regaddress} onChange={this.changeRegAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
         <div className="AddButton">
@@ -82,4 +84,4 @@ class Content extends Component {
   }
 }
 
-export default Content;
+export default Calender;
