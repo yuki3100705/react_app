@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Header.css';
-import Icon from './symitems.png'
+import Icon from './symitems.png';
 
 class Header extends Component {
 
