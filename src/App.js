@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './Header';
+import Login from './Login';
 import Administrator from './Administrator';
 import Calendar from './Calendar';
 import Footer from './Footer';
@@ -13,8 +14,9 @@ class App extends Component {
       <div className="MyApp">
         <Header />
         <Router>
-          <Route path="/administrator" component={Administrator}></Route>
-          <Route path="/calendar" component={Calendar}></Route>
+          <Route exact path='/' component={Login} />
+          <Route path="/administrator" component={Administrator} />
+          <Route path="/calendar" component={Calendar} />
         </Router>
         <Footer />
       </div>

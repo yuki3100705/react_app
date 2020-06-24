@@ -1,87 +1,74 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import ReactCalendar from 'react-calendar';
 import './Calendar.css';
-import ProfileBox from './ProfileBox';
 import { Link } from "react-router-dom";
 
-class Calender extends Component {
-  constructor() {
-    super();
+class Calendar extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      url_users: 'http://localhost:3001/users',
-      data: [],
-      regname: '',
-      regaddress: '',
+      date: new Date(),
+      //月のデータ
+      month_days: {
+        20200607: { is_holiday: true },
+        20200614: { is_holiday: true },
+        20200621: { is_holiday: true },
+        20200628: { is_holiday: true },
+        20200617: { text: '二宮 誕生日' },
+        20200624: { text: 'きたりえbirthday' }
+      }
     };
+    this.getTileClass = this.getTileClass.bind(this);
+    this.getTileContent = this.getTileContent.bind(this);
   }
-  componentDidMount() {
-    this.getUser();
+
+  // state の日付と同じ表記に変換
+  getFormatDate(date) {
+    return `${date.getFullYear()}${('0' + (date.getMonth() + 1)).slice(-2)}${('0' + date.getDate()).slice(-2)}`;
   }
-  getUser() {
-    axios
-      .get(this.state.url_users)
-      .then((results) => {
-        console.log(results.data);
-        this.setState({
-          data: results.data,
-        });
-      },)
-      .catch((error) => {
-        if (error.response) {
-          // このリクエストはステータスコードとともに作成されます
-          // 2xx系以外の時にエラーが発生します
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // このリクエストはレスポンスが返ってこない時に作成されます。
-          // `error.request`はXMLHttpRequestのインスタンスです。
-          console.log(error.request);
-        } else {
-          //それ以外で何か以上が起こった時
-          console.log('Error', error.message);
+
+  //日付のクラスを付与 (祝日用)
+  getTileClass({ date, view }) {
+    // 月表示のときのみ
+    if (view !== 'month') {
+      return '';
+    }
+    const day = this.getFormatDate(date);
+    return (this.state.month_days[day] && this.state.month_days[day].is_holiday) ?
+      'holiday' : '';
+  }
+
+  //日付の内容を出力
+  getTileContent({ date, view }) {
+    // 月表示のときのみ
+    if (view !== 'month') {
+      return null;
+    }
+    const day = this.getFormatDate(date);
+    return (
+      <p>
+        <br />
+        {(this.state.month_days[day] && this.state.month_days[day].text) ?
+          this.state.month_days[day].text : ' '
         }
-        console.log(error.config);
-      });
-  }
-  registerUser(regname, regaddress) {
-    const user = { name : regname, address : regaddress };
-    axios.post(this.state.url_users, user).then(this.getUser.bind(this));
-    this.setState({regname: '', regaddress: ''});
-  }
-  changeRegName(e) {
-    this.setState({regname: e.target.value});
-  }
-  changeRegAddress(e) {
-    this.setState({regaddress: e.target.value});
+      </p>
+    );
   }
 
   render() {
     return (
       <div className="MyContent">
-        <h1 className="MyContent-title">実はカレンダー画面です。</h1>
+        <h1>Symitems Calendar</h1>
         <Link to="/administrator">Administrator</Link>
-        <div>名前：<input value={this.state.regname} onChange={this.changeRegName.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
-        <div>連絡先：<input value={this.state.regaddress} onChange={this.changeRegAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
-        <div className="AddButton">
-          <button
-            type="button"
-            className="MyButton"
-            onClick={() => this.registerUser(this.state.regname, this.state.regaddress)}
-          >
-            登録
-          </button>
-        </div>
-        <div className="grid">
-          <div className="row">
-            {this.state.data.map((value) => {
-              return <ProfileBox data={value} url_users={this.state.url_users} getUser={this.getUser.bind(this)} />;
-            })}
-          </div>
-        </div>
+        <ReactCalendar
+          locale="ja-JP"
+          value={this.state.date}
+          tileClassName={this.getTileClass}
+          tileContent={this.getTileContent}
+        />
       </div>
     );
   }
 }
 
-export default Calender;
+export default Calendar;
