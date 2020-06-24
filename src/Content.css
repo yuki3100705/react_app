@@ -22,8 +22,8 @@ h1{
   padding-top: 70px;
   padding-left: 10%;
   padding-right: 10%;
-  height: calc(100vh - 120px);
-  width: 80%;
+  height: calc(111vh - 120px);
+  width: 100%;
   font-size: calc(10px + 2vmin);
   color: white;
   overflow-x: hidden;

@@ -128,7 +128,7 @@ class Content extends Component {
         <div>
         <button
         type="button"
-        className="Button"
+        className="MyButton"
         onClick={() => this.auth(this.state.loginname, this.state.loginaddress)}
         >
           login
@@ -136,7 +136,7 @@ class Content extends Component {
 
           <button
           type="button"
-          className="Button"
+          className="MyButton"
           onClick={() => this.loginUser(this.state.loginname, this.state.loginaddress)}
           >
             登録
