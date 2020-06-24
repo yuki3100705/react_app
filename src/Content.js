@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Content.css';
 
+const login_url = 'http://localhost:3001/login';
 const url_users = 'http://localhost:3001/users';
+
+function validateRequired (property, message){
+  const error = property === "" || property === null ? [message] : null;
+  return error;
+}
 
 class Content extends Component {
   constructor() {
     super();
     this.state = {
       data: [],
-      regname: '',
-      regaddress: ''
+      loginname: '',
+      loginaddress: '',
+      comment: '',
+      errors: '',
+      nameError: '',
+      addressError: '',
     };
   }
   componentDidMount() {
@@ -32,65 +42,75 @@ class Content extends Component {
           console.log(error.response.status);
           console.log(error.response.headers);
         } else if (error.request) {
-          // このリクエストはレスポンスが返ってこない時に作成されます。
-          // `error.request`はXMLHttpRequestのインスタンスです。
+          // このリクエストはレスポンスが返ってこない時に作成されます
+          // `error.request`はXMLHttpRequestのインスタンスです
           console.log(error.request);
         } else {
-          //それ以外で何か以上が起こった時
+          //それ以外で何か異常が起こった時
           console.log('Error', error.message);
         }
         console.log(error.config);
       });
   }
-  registerUser(regname, regaddress) {
-    const user = { name : regname, address : regaddress };
+
+  auth(loginname, loginaddress) {
+    this.setState({
+      errors: { nameError: "", addressError: "", _global: [] },
+      comment: ""
+    });
+    const loginnameError = validateRequired(loginname, "ユーザ名を入力してください");
+    const loginaddressError = validateRequired(loginaddress, "電話番号を入力してください");
+    if (loginnameError || loginaddressError) {
+      this.setState({
+        errors: { nameError: loginnameError, addressError: loginaddressError, _global: [] },
+        processing: false
+      });
+      return;
+    }
+    const user = { name : loginname, address : loginaddress };
+    axios.post(login_url + '/auth', user).then((results) => {this.setState({comment: results.data.comment})},).then(this.getUser.bind(this));
+  }
+  testdelete(id) {
+    axios.post(login_url + '/desdes/' + id).then(this.getUser.bind(this));
+  }
+
+  loginUser(loginname, loginaddress) {
+    const user = { name : loginname, address : loginaddress };
     axios.post(url_users, user).then(this.getUser.bind(this));
-    this.setState({regname: '', regaddress: ''});
+    this.setState({loginname: '', loginaddress: ''});
   }
-  changeRegName(e) {
-    this.setState({regname: e.target.value});
+  changeLoginName(e) {
+    this.setState({loginname: e.target.value});
   }
-  changeRegAddress(e) {
-    this.setState({regaddress: e.target.value});
+  changeLoginAddress(e) {
+    this.setState({loginaddress: e.target.value});
   }
+
   deleteUser(id) {
     axios.delete(url_users + '/' + id).then(this.getUser.bind(this));
-  }
-  updateUser(id, name, address) {
-    name = 'Edit';
-    address = 'edit@gmail.com';
-    const user = { name, address };
-    axios.put(url_users + '/' + id, user).then(this.getUser.bind(this));
   }
 
   render() {
     return (
       <div className="Content-header">
-        <h1 className="Content-title">We Are Symitems!</h1>
-        <div>名前：<input value={this.state.regname} onChange={this.changeRegName.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
-        <div>連絡先：<input value={this.state.regaddress} onChange={this.changeRegAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
-        <div>
-          <button
-          type="button"
-          className="Button"
-          onClick={() => this.registerUser(this.state.regname, this.state.regaddress)}
-          >
-            登録
-          </button>
-        </div>
+        <div>{this.state.comment}</div>
+        <div>{this.state.errors.nameError}</div>
+        <div>{this.state.errors.addressError}</div>
         {this.state.data.map((v)=>{
           return (
             <div className="user-list">
               <hr/>
               <p className="list-name"> 名前: {v.name} </p>
               <p className="list-address"> 連絡先: {v.address} </p>
+
               <button
                 type="button"
                 className="Button"
-                onClick={() => this.updateUser(v.id, v.name, v.address)}
+                onClick={() => this.testdelete(v.id)}
               >
-                編集
+                testdelete
               </button>
+
               <button
                 type="button"
                 className="Button"
@@ -98,9 +118,31 @@ class Content extends Component {
               >
                 削除
               </button>
+
             </div>
           );
         })}
+        <h1 className="Content-title">We Are Symitems!</h1>
+        <div>name：<input value={this.state.loginname} onChange={this.changeLoginName.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
+        <div>address：<input value={this.state.loginaddress} onChange={this.changeLoginAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
+        <div>
+        <button
+        type="button"
+        className="Button"
+        onClick={() => this.auth(this.state.loginname, this.state.loginaddress)}
+        >
+          login
+        </button>
+
+          <button
+          type="button"
+          className="Button"
+          onClick={() => this.loginUser(this.state.loginname, this.state.loginaddress)}
+          >
+            登録
+          </button>
+
+        </div>
       </div>
     );
   }
