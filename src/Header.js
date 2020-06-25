@@ -7,7 +7,7 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <img src={Icon} alt="" />
+        <img src={Icon} className="header-logo" alt="" />
         <div className="header-title">
           Symitems User List
         </div>

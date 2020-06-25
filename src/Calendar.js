@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactCalendar from 'react-calendar';
 import './Calendar.css';
 import { Link } from "react-router-dom";
-import IconAdministrator from './Administrator.png';
+import IconAdministrator from './AdministratorWhite.png';
 
 class Calendar extends Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class Calendar extends Component {
     return (
       <div className="MyContent">
         <h1>Symitems Calendar</h1>
-        <Link to="/administrator"><img src={IconAdministrator} alt="" /></Link>
+        <Link to="/administrator" className="header-icon"><img src={IconAdministrator} className="header-icon" alt="" /></Link>
         <ReactCalendar
           locale="ja-JP"
           value={this.state.date}

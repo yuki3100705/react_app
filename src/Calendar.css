@@ -43,3 +43,11 @@ h1{
 .AddButton{
   padding-bottom: 15px;
 }
+
+.header-icon{
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  height: 40px;
+  z-index: 1000;
+}
