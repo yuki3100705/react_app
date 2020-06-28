@@ -7,6 +7,9 @@ import Calendar from './Calendar';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 class App extends Component {
   render() {

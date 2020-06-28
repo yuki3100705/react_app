@@ -9,7 +9,7 @@ class Header extends Component {
       <div className="header">
         <img src={Icon} className="header-logo" alt="" />
         <div className="header-title">
-          Symitems User List
+          Symitems Application Prototype
         </div>
       </div>
     );

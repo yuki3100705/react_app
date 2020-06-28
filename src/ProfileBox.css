@@ -19,3 +19,17 @@ p {
   background-color: whitesmoke;
   color: black;
 }
+
+.Modal-Header{
+  vertical-align: middle;
+}
+
+.close{
+  vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  height: 30px;
+  position: absolute;
+  right: 30px;
+}

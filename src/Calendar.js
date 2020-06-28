@@ -59,8 +59,8 @@ class Calendar extends Component {
   render() {
     return (
       <div className="MyContent">
-        <h1>Symitems Calendar</h1>
         <Link to="/administrator" className="header-icon"><img src={IconAdministrator} className="header-icon" alt="" /></Link>
+        <h1>Symitems Calendar</h1>
         <ReactCalendar
           locale="ja-JP"
           value={this.state.date}

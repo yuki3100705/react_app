@@ -60,8 +60,8 @@ class Administrator extends Component {
   render() {
     return (
       <div className="MyContent">
-        <h1 className="MyContent-title">We Are Symitems!</h1>
         <Link to="/calendar" className="header-icon"><img src={IconCalendar} className="header-icon" alt="" /></Link>
+        <h1 className="MyContent-title">We Are Symitems!</h1>
         <div>名前：<input value={this.state.regname} onChange={this.changeRegName.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
         <div>連絡先：<input value={this.state.regaddress} onChange={this.changeRegAddress.bind(this)} style={{display: 'inline-block', _display: 'inline'}} /></div>
         <div className="AddButton">
